@@ -1,0 +1,2352 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="CLI INTELLIGENCE — авторские образовательные программы по OSINT, цифровой разведке и кибербезопасности.">
+<title>CLI INTELLIGENCE — Academy</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#090909;
+  --panel:#111;
+  --border:#292929;
+  --text:#f1f1f1;
+  --muted:#888;
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:90px;
+}
+
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:Manrope,sans-serif;
+  overflow-x:hidden;
+}
+
+body.no-scroll {
+  overflow:hidden;
+}
+
+a {
+  color:inherit;
+  text-decoration:none;
+}
+
+button,input {
+  font:inherit;
+}
+
+button {
+  cursor:pointer;
+}
+
+.container {
+  width:min(1240px,90%);
+  margin:auto;
+}
+
+.noise {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:100;
+  opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* HEADER */
+
+header {
+  height:78px;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:40;
+  background:rgba(9,9,9,.92);
+  backdrop-filter:blur(18px);
+}
+
+.nav {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  gap:20px;
+}
+
+.logo {
+  font-family:"Space Grotesk";
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:2px;
+  white-space:nowrap;
+}
+
+.logo span {
+  color:#777;
+}
+
+.nav-links {
+  display:flex;
+  gap:25px;
+  color:#aaa;
+  font-size:12px;
+}
+
+.nav-links a,
+.footer-links a {
+  transition:.2s;
+}
+
+.nav-links a:hover,
+.footer-links a:hover {
+  color:white;
+}
+
+.nav-actions {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.nav-button {
+  border:1px solid #555;
+  padding:11px 17px;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  transition:.25s;
+  white-space:nowrap;
+  background:transparent;
+  color:white;
+}
+
+.nav-button:hover {
+  background:white;
+  color:black;
+}
+
+.cart-trigger {
+  background:#eee;
+  color:#080808;
+  border:1px solid #eee;
+  padding:11px 16px;
+  font-size:10px;
+  letter-spacing:1px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.cart-trigger:hover {
+  background:white;
+}
+
+.cart-count {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#111;
+  color:white;
+  border-radius:50%;
+  width:19px;
+  height:19px;
+  margin-left:5px;
+  font-size:10px;
+}
+
+/* HERO */
+
+.hero {
+  min-height:660px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+}
+
+.hero-bg {
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,#090909 0%,rgba(9,9,9,.95) 35%,rgba(9,9,9,.25) 100%),
+    linear-gradient(0deg,#090909 0%,transparent 35%),
+    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85") center/cover;
+  filter:grayscale(100%);
+  opacity:.72;
+}
+
+.hero-content {
+  position:relative;
+  z-index:2;
+  padding:100px 0;
+  max-width:790px;
+}
+
+.eyebrow,
+.section-label {
+  color:#929292;
+  font-size:10px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.hero h1 {
+  font-family:"Space Grotesk";
+  font-size:clamp(52px,8vw,105px);
+  line-height:.98;
+  letter-spacing:-5px;
+  font-weight:600;
+}
+
+.hero h1 span {
+  color:#777;
+}
+
+.hero-description {
+  color:#999;
+  max-width:490px;
+  line-height:1.9;
+  font-size:14px;
+  margin-top:30px;
+}
+
+.hero-actions {
+  display:flex;
+  gap:12px;
+  margin-top:36px;
+  flex-wrap:wrap;
+}
+
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px 23px;
+  font-size:10px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  border:1px solid #eee;
+  transition:.25s;
+  cursor:pointer;
+}
+
+.btn-primary {
+  background:#eee;
+  color:#080808;
+}
+
+.btn-primary:hover {
+  background:white;
+  transform:translateY(-3px);
+}
+
+.btn-outline {
+  border-color:#444;
+  color:#ddd;
+  background:transparent;
+}
+
+.btn-outline:hover {
+  border-color:white;
+}
+
+.hero-index {
+  position:absolute;
+  right:5%;
+  bottom:40px;
+  color:#777;
+  font-size:10px;
+  letter-spacing:3px;
+}
+
+/* STATS */
+
+.stats {
+  border-bottom:1px solid var(--border);
+}
+
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+
+.stat {
+  padding:32px 25px;
+  border-right:1px solid var(--border);
+}
+
+.stat:first-child {
+  padding-left:0;
+}
+
+.stat:last-child {
+  border:0;
+}
+
+.stat strong {
+  font-family:"Space Grotesk";
+  font-size:30px;
+  font-weight:500;
+}
+
+.stat p {
+  color:#777;
+  font-size:10px;
+  margin-top:7px;
+}
+
+/* SECTIONS */
+
+.section {
+  padding:100px 0;
+}
+
+.section-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:25px;
+  margin-bottom:42px;
+}
+
+.section h2 {
+  font-family:"Space Grotesk";
+  font-weight:500;
+  font-size:clamp(34px,5vw,58px);
+  letter-spacing:-2px;
+}
+
+.section-sub {
+  color:#777;
+  font-size:12px;
+  line-height:1.8;
+  max-width:300px;
+}
+
+/* FEATURE */
+
+.feature {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border:1px solid var(--border);
+  background:#101010;
+  min-height:400px;
+}
+
+.feature-image {
+  min-height:350px;
+  background:
+    linear-gradient(0deg,rgba(0,0,0,.25),transparent),
+    url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85") center/cover;
+  filter:grayscale(100%);
+}
+
+.feature-content {
+  padding:55px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.feature-content h3 {
+  font-family:"Space Grotesk";
+  font-size:34px;
+  font-weight:500;
+  line-height:1.15;
+  margin-bottom:20px;
+}
+
+.feature-content p {
+  color:#888;
+  font-size:13px;
+  line-height:1.9;
+}
+
+.feature-tag {
+  display:inline-block;
+  color:#aaa;
+  border:1px solid #383838;
+  padding:8px 12px;
+  font-size:9px;
+  letter-spacing:2px;
+  width:max-content;
+  margin-bottom:25px;
+}
+
+/* CATALOG */
+
+.catalog {
+  padding-top:50px;
+}
+
+.catalog-tools {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+}
+
+.search {
+  flex:1;
+  min-width:220px;
+  background:#111;
+  border:1px solid var(--border);
+  color:white;
+  padding:15px 17px;
+  outline:none;
+  font-size:12px;
+}
+
+.search:focus {
+  border-color:#777;
+}
+
+.filters {
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.filter {
+  background:transparent;
+  border:1px solid #333;
+  color:#888;
+  padding:12px 15px;
+  font-size:10px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.filter:hover,
+.filter.active {
+  background:#eee;
+  color:#080808;
+  border-color:#eee;
+}
+
+.catalog-count {
+  color:#777;
+  font-size:10px;
+  margin:18px 0 24px;
+  letter-spacing:1px;
+}
+
+.courses {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.course {
+  background:var(--panel);
+  border:1px solid var(--border);
+  min-width:0;
+  transition:.3s;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.course:hover {
+  transform:translateY(-5px);
+  border-color:#666;
+}
+
+.course-image {
+  height:175px;
+  position:relative;
+  overflow:hidden;
+  background:#191919;
+}
+
+.course-image img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(100%) brightness(.72);
+  transition:.6s;
+}
+
+.course:hover .course-image img {
+  transform:scale(1.06);
+  filter:grayscale(100%) brightness(.9);
+}
+
+.course-number {
+  position:absolute;
+  top:14px;
+  left:14px;
+  background:rgba(0,0,0,.7);
+  border:1px solid #555;
+  padding:7px 10px;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+.course-level {
+  position:absolute;
+  bottom:14px;
+  right:14px;
+  font-size:9px;
+  color:white;
+  letter-spacing:1px;
+  background:rgba(0,0,0,.65);
+  padding:7px 10px;
+}
+
+.course-body {
+  padding:23px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+
+.course-category {
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#777;
+  margin-bottom:14px;
+}
+
+.course h3 {
+  font-family:"Space Grotesk";
+  font-size:21px;
+  font-weight:500;
+  line-height:1.3;
+  min-height:55px;
+}
+
+.course-description {
+  color:#858585;
+  font-size:11px;
+  line-height:1.8;
+  margin-top:13px;
+  min-height:58px;
+}
+
+.course-bottom {
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  border-top:1px solid #292929;
+  padding-top:18px;
+  margin-top:23px;
+  gap:10px;
+}
+
+.price {
+  font-family:"Space Grotesk";
+  font-size:23px;
+  white-space:nowrap;
+}
+
+.price small {
+  display:block;
+  font-family:Manrope;
+  color:#777;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.course-actions {
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.details,
+.add-cart {
+  border:1px solid #444;
+  background:transparent;
+  color:#ddd;
+  padding:11px 12px;
+  font-size:9px;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.details:hover,
+.add-cart:hover {
+  background:white;
+  color:black;
+  border-color:white;
+}
+
+.add-cart.added {
+  background:#eee;
+  color:#080808;
+  border-color:#eee;
+}
+
+.empty {
+  grid-column:1/-1;
+  text-align:center;
+  color:#777;
+  padding:60px;
+  border:1px solid var(--border);
+}
+
+/* ABOUT PROJECT */
+
+.about {
+  background:#111;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+.about-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+}
+
+.about h2 {
+  font-family:"Space Grotesk";
+  font-size:45px;
+  font-weight:500;
+  line-height:1.1;
+}
+
+.about-text {
+  color:#888;
+  font-size:13px;
+  line-height:2;
+}
+
+.about-points {
+  margin-top:25px;
+  display:grid;
+  gap:16px;
+}
+
+.about-point {
+  border-top:1px solid #333;
+  padding-top:15px;
+  color:#bbb;
+  font-size:12px;
+}
+
+.about-point span {
+  color:#666;
+  margin-right:12px;
+}
+
+/* AUTHOR */
+
+.author {
+  background:#0d0d0d;
+  border-bottom:1px solid var(--border);
+}
+
+.author-grid {
+  display:grid;
+  grid-template-columns:.75fr 1.25fr;
+  gap:65px;
+}
+
+.author-heading {
+  position:sticky;
+  top:115px;
+  align-self:start;
+}
+
+.author-kicker {
+  font-size:10px;
+  letter-spacing:3px;
+  color:#777;
+  margin-bottom:18px;
+}
+
+.author-name {
+  font-family:"Space Grotesk";
+  font-size:clamp(42px,6vw,68px);
+  line-height:1;
+  letter-spacing:-3px;
+  font-weight:500;
+}
+
+.author-name span {
+  display:block;
+  color:#666;
+  font-size:15px;
+  letter-spacing:3px;
+  margin-top:17px;
+}
+
+.author-content {
+  border-left:1px solid #303030;
+  padding-left:40px;
+}
+
+.author-content p {
+  font-size:13px;
+  color:#999;
+  line-height:2;
+  margin-bottom:20px;
+}
+
+.author-content strong {
+  color:#eee;
+  font-weight:600;
+}
+
+.author-tags {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:25px 0 30px;
+}
+
+.author-tags span {
+  border:1px solid #333;
+  padding:9px 12px;
+  color:#aaa;
+  font-size:9px;
+  letter-spacing:1px;
+}
+
+.author-contact {
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  border-bottom:1px solid #777;
+  padding-bottom:9px;
+  font-size:11px;
+  letter-spacing:1px;
+}
+
+.author-contact:hover {
+  color:white;
+  border-color:white;
+}
+
+/* CTA */
+
+.bottom-banner {
+  padding:110px 0;
+  text-align:center;
+  background:linear-gradient(0deg,#101010,#090909);
+}
+
+.bottom-banner h2 {
+  font-family:"Space Grotesk";
+  font-size:clamp(40px,7vw,75px);
+  font-weight:500;
+  letter-spacing:-3px;
+}
+
+.bottom-banner p {
+  color:#888;
+  font-size:13px;
+  margin:22px auto 30px;
+  max-width:430px;
+  line-height:1.8;
+}
+
+/* FOOTER */
+
+footer {
+  border-top:1px solid var(--border);
+  padding:35px 0;
+}
+
+.footer-inner {
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.footer-copy {
+  font-size:10px;
+  color:#666;
+}
+
+.footer-links {
+  display:flex;
+  gap:25px;
+  font-size:10px;
+  color:#888;
+}
+
+/* COURSE MODAL */
+
+.modal {
+  position:fixed;
+  inset:0;
+  z-index:60;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(10px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.open {
+  display:flex;
+}
+
+.modal-box {
+  width:min(570px,100%);
+  background:#141414;
+  border:1px solid #444;
+  padding:35px;
+  position:relative;
+  max-height:90vh;
+  overflow-y:auto;
+}
+
+.modal-close {
+  position:absolute;
+  right:20px;
+  top:17px;
+  background:none;
+  border:0;
+  color:white;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.modal-box h2 {
+  font-family:"Space Grotesk";
+  font-size:32px;
+  font-weight:500;
+  margin:15px 0;
+}
+
+.modal-box p {
+  color:#999;
+  font-size:12px;
+  line-height:1.9;
+}
+
+.modal-price {
+  font-family:"Space Grotesk";
+  font-size:28px;
+  margin:25px 0;
+}
+
+.modal-price span {
+  display:block;
+  color:#777;
+  font-family:Manrope;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.modal-actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+
+/* CART */
+
+.cart-overlay {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:70;
+  display:none;
+}
+
+.cart-overlay.open {
+  display:block;
+}
+
+.cart-panel {
+  position:fixed;
+  z-index:71;
+  right:0;
+  top:0;
+  height:100vh;
+  width:min(460px,100%);
+  background:#101010;
+  border-left:1px solid #333;
+  transform:translateX(105%);
+  transition:transform .3s;
+  display:flex;
+  flex-direction:column;
+}
+
+.cart-panel.open {
+  transform:translateX(0);
+}
+
+.cart-header {
+  padding:25px;
+  border-bottom:1px solid #333;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.cart-header h2 {
+  font-family:"Space Grotesk";
+  font-size:25px;
+  font-weight:500;
+}
+
+.cart-close {
+  background:none;
+  border:0;
+  color:white;
+  font-size:27px;
+  cursor:pointer;
+}
+
+.cart-items {
+  padding:20px 25px;
+  overflow-y:auto;
+  flex:1;
+}
+
+.cart-empty {
+  color:#777;
+  font-size:12px;
+  line-height:1.8;
+  padding:35px 0;
+  text-align:center;
+}
+
+.cart-item {
+  padding:17px 0;
+  border-bottom:1px solid #292929;
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.cart-item h3 {
+  font-family:"Space Grotesk";
+  font-size:15px;
+  font-weight:500;
+  line-height:1.4;
+}
+
+.cart-item p {
+  font-size:10px;
+  color:#777;
+  margin-top:7px;
+}
+
+.remove-item {
+  border:0;
+  background:none;
+  color:#777;
+  cursor:pointer;
+  font-size:11px;
+  white-space:nowrap;
+}
+
+.remove-item:hover {
+  color:white;
+}
+
+.cart-footer {
+  padding:22px 25px;
+  border-top:1px solid #333;
+}
+
+.cart-total {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:17px;
+  font-size:12px;
+  color:#aaa;
+}
+
+.cart-total strong {
+  font-family:"Space Grotesk";
+  font-size:24px;
+  color:white;
+}
+
+.cart-note {
+  font-size:10px;
+  color:#777;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+.checkout {
+  width:100%;
+  border:0;
+  background:#eee;
+  color:#080808;
+  padding:16px;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+
+.checkout:hover {
+  background:white;
+}
+
+.checkout:disabled {
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+/* ANIMATION */
+
+.reveal {
+  opacity:0;
+  transform:translateY(25px);
+  transition:opacity .7s,transform .7s;
+}
+
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px) {
+  .courses {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .feature {
+    grid-template-columns:1fr;
+  }
+
+  .feature-image {
+    min-height:260px;
+  }
+
+  .about-grid,
+  .author-grid {
+    grid-template-columns:1fr;
+    gap:30px;
+  }
+
+  .author-heading {
+    position:static;
+  }
+
+  .author-content {
+    padding-left:25px;
+  }
+}
+
+@media(max-width:650px) {
+  .container {
+    width:91%;
+  }
+
+  header {
+    height:65px;
+  }
+
+  .nav-links {
+    display:none;
+  }
+
+  .logo {
+    font-size:15px;
+  }
+
+  .nav-actions {
+    gap:6px;
+  }
+
+  .nav-button {
+    padding:9px 10px;
+    font-size:8px;
+  }
+
+  .cart-trigger {
+    padding:9px 10px;
+    font-size:9px;
+  }
+
+  .hero {
+    min-height:590px;
+  }
+
+  .hero h1 {
+    letter-spacing:-3px;
+  }
+
+  .hero-description {
+    font-size:12px;
+  }
+
+  .stats-grid {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .stat {
+    padding:22px 10px;
+  }
+
+  .stat:nth-child(2) {
+    border:0;
+  }
+
+  .stat:last-child {
+    grid-column:1/-1;
+    border-top:1px solid var(--border);
+    padding-left:0;
+  }
+
+  .section {
+    padding:70px 0;
+  }
+
+  .section-top {
+    display:block;
+  }
+
+  .section-sub {
+    margin-top:15px;
+  }
+
+  .courses {
+    grid-template-columns:1fr;
+  }
+
+  .course-image {
+    height:205px;
+  }
+
+  .feature-content {
+    padding:30px;
+  }
+
+  .about h2 {
+    font-size:37px;
+  }
+
+  .author-content {
+    padding-left:18px;
+  }
+
+  .bottom-banner {
+    padding:75px 0;
+  }
+
+  .footer-inner {
+    display:block;
+  }
+
+  .footer-links {
+    margin-top:20px;
+    flex-wrap:wrap;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+
+<header>
+  <div class="container nav">
+
+    <a href="#" class="logo">CLI <span>INTELLIGENCE</span></a>
+
+    <nav class="nav-links">
+      <a href="#about">О проекте</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#author">Об авторе</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="cart-trigger" id="openCart">
+        Корзина <span class="cart-count" id="cartCount">0</span>
+      </button>
+
+      <a class="nav-button" href="https://t.me/cli_intelligence" target="_blank" rel="noopener">
+        Связаться ↗
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<section class="hero">
+
+  <div class="hero-bg"></div>
+
+  <div class="container">
+    <div class="hero-content">
+
+      <div class="eyebrow">Independent intelligence education</div>
+
+      <h1>
+        Знания.<br>
+        <span>Методология.</span><br>
+        Результат.
+      </h1>
+
+      <p class="hero-description">
+        Образовательные программы по OSINT, цифровой разведке,
+        кибербезопасности и аналитике. От основ до профессионального уровня.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#catalog">
+          Исследовать каталог ↗
+        </a>
+
+        <a class="btn btn-outline" href="#author">
+          Об авторе
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hero-index">ACADEMY / 2026</div>
+
+</section>
+
+<section class="stats">
+  <div class="container stats-grid">
+
+    <div class="stat">
+      <strong>17</strong>
+      <p>ОБРАЗОВАТЕЛЬНЫХ ПРОГРАММ</p>
+    </div>
+
+    <div class="stat">
+      <strong>0 → ∞</strong>
+      <p>ОТ БАЗОВЫХ ЗНАНИЙ ДО ADVANCED</p>
+    </div>
+
+    <div class="stat">
+      <strong>01</strong>
+      <p>ЕДИНАЯ СИСТЕМА ОБУЧЕНИЯ</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="section-top reveal">
+      <div>
+        <div class="section-label">01 / PHILOSOPHY</div>
+        <h2>Не просто искать.<br>Понимать связи.</h2>
+      </div>
+
+      <p class="section-sub">
+        Информация приобретает ценность, когда её умеют проверять,
+        сопоставлять и анализировать.
+      </p>
+    </div>
+
+    <div class="feature reveal">
+
+      <div class="feature-image"></div>
+
+      <div class="feature-content">
+
+        <span class="feature-tag">INTELLIGENCE / ANALYSIS</span>
+
+        <h3>От отдельного сигнала — к целостной картине.</h3>
+
+        <p>
+          Изучай методы поиска, проверки источников, цифровой разведки,
+          анализа инфраструктуры и построения доказательных выводов.
+          Практические материалы и структурированное обучение.
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section catalog" id="catalog">
+
+  <div class="container">
+
+    <div class="section-top reveal">
+      <div>
+        <div class="section-label">02 / EDUCATION</div>
+        <h2>Каталог программ.</h2>
+      </div>
+
+      <p class="section-sub">
+        Выбери программу, соответствующую твоим задачам
+        и уровню подготовки.
+      </p>
+    </div>
+
+    <div class="catalog-tools reveal">
+
+      <input
+        class="search"
+        id="search"
+        type="search"
+        placeholder="Поиск курса или направления..."
+      >
+
+      <div class="filters">
+        <button class="filter active" data-filter="all">Все</button>
+        <button class="filter" data-filter="osint">OSINT</button>
+        <button class="filter" data-filter="security">Кибербезопасность</button>
+        <button class="filter" data-filter="advanced">Advanced</button>
+      </div>
+
+    </div>
+
+    <div class="catalog-count" id="count">17 PROGRAMS</div>
+
+    <div class="courses" id="courses"></div>
+
+  </div>
+</section>
+
+<section class="section about" id="about">
+
+  <div class="container about-grid">
+
+    <div class="reveal">
+      <div class="section-label">03 / ABOUT THE PROJECT</div>
+      <h2>Системное обучение.<br>Практическое мышление.</h2>
+    </div>
+
+    <div class="reveal">
+
+      <p class="about-text">
+        CLI INTELLIGENCE — образовательный проект, посвящённый
+        разведке по открытым источникам, аналитике и цифровой безопасности.
+        Программы помогают последовательно изучать инструменты,
+        методологии и рабочие процессы.
+      </p>
+
+      <div class="about-points">
+
+        <div class="about-point">
+          <span>01</span>
+          Структурированные учебные программы
+        </div>
+
+        <div class="about-point">
+          <span>02</span>
+          Практические инструменты и задания
+        </div>
+
+        <div class="about-point">
+          <span>03</span>
+          Аналитический подход к информации
+        </div>
+
+        <div class="about-point">
+          <span>04</span>
+          Материалы для самостоятельного изучения
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section author" id="author">
+
+  <div class="container author-grid">
+
+    <div class="author-heading reveal">
+
+      <div class="author-kicker">04 / ABOUT THE AUTHOR</div>
+
+      <h2 class="author-name">
+        Алексей
+        <span>CLI INTELLIGENCE</span>
+      </h2>
+
+    </div>
+
+    <div class="author-content reveal">
+
+      <p>
+        <strong>
+          Алексей — автор и разработчик образовательной платформы
+          CLI INTELLIGENCE.
+        </strong>
+        Практикующий OSINT-аналитик и специалист в области кибербезопасности.
+        Его деятельность охватывает полный цикл разведки по открытым источникам:
+        от сетевой разведки, сканирования инфраструктуры и исследования
+        уязвимостей до пассивного сбора данных, проверки достоверности сведений
+        и анализа цифровых связей.
+      </p>
+
+      <p>
+        В числе авторских проектов — разработка инструмента визуализации данных
+        <strong>OsintVisual</strong>, создание практических методик исследования
+        сетевой инфраструктуры, сетевых протоколов и цифровых сертификатов,
+        а также учебных материалов по OSINT и информационной безопасности.
+      </p>
+
+      <p>
+        В основе профессионального подхода лежит принцип доказательной
+        и этичной разведки. OSINT — это не поиск украденных баз и не сомнительные
+        услуги по сбору персональных данных, а последовательный процесс
+        получения, проверки, сопоставления и анализа информации из законно
+        доступных источников.
+      </p>
+
+      <p>
+        На платформе собрана авторская линейка курсов, объединённая в единую
+        образовательную траекторию. Обучение начинается с фундаментальных
+        принципов сетевого взаимодействия и работы с инструментами вроде Nmap,
+        а затем переходит к исследованию цифровой инфраструктуры, анализу данных,
+        построению связей и подготовке профессиональных аналитических отчётов.
+        Каждый курс дополняет предыдущие и помогает сформировать целостное
+        понимание современной цифровой разведки.
+      </p>
+
+      <div class="author-tags">
+        <span>OSINT</span>
+        <span>CYBERSECURITY</span>
+        <span>GEOINT</span>
+        <span>CTI</span>
+        <span>DATA ANALYSIS</span>
+        <span>OsintVisual</span>
+      </div>
+
+      <a
+        class="author-contact"
+        href="https://t.me/cli_intelligence"
+        target="_blank"
+        rel="noopener"
+      >
+        TELEGRAM / @cli_intelligence ↗
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="bottom-banner" id="contacts">
+
+  <div class="container reveal">
+
+    <div class="section-label">05 / GET STARTED</div>
+
+    <h2>Начни изучать.</h2>
+
+    <p>
+      Выбери образовательную программу и свяжись с автором
+      для получения подробностей и оформления покупки.
+    </p>
+
+    <a
+      href="https://t.me/cli_intelligence"
+      class="btn btn-primary"
+      target="_blank"
+      rel="noopener"
+    >
+      Перейти в Telegram ↗
+    </a>
+
+  </div>
+</section>
+
+<footer>
+
+  <div class="container footer-inner">
+
+    <div>
+      <div class="logo">CLI <span>INTELLIGENCE</span></div>
+      <p class="footer-copy" style="margin-top:12px">
+        © 2026 CLI Intelligence. All rights reserved.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#catalog">Каталог</a>
+      <a href="#about">О проекте</a>
+      <a href="#author">Об авторе</a>
+      <a href="https://t.me/cli_intelligence" target="_blank" rel="noopener">
+        Telegram ↗
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<!-- COURSE MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <button class="modal-close" id="closeModal" aria-label="Закрыть">
+      ×
+    </button>
+
+    <div class="section-label" id="modalNumber"></div>
+
+    <h2 id="modalTitle"></h2>
+
+    <p id="modalDescription"></p>
+
+    <div class="modal-price" id="modalPrice"></div>
+
+    <div class="modal-actions">
+
+      <button class="btn btn-primary" id="modalAdd">
+        Добавить в корзину
+      </button>
+
+      <a
+        href="https://t.me/cli_intelligence"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-outline"
+      >
+        Связаться ↗
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- CART -->
+
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<aside class="cart-panel" id="cartPanel">
+
+  <div class="cart-header">
+    <h2>Корзина</h2>
+    <button class="cart-close" id="closeCart" aria-label="Закрыть">×</button>
+  </div>
+
+  <div class="cart-items" id="cartItems"></div>
+
+  <div class="cart-footer">
+
+    <div class="cart-total">
+      <span>ИТОГО</span>
+      <strong id="cartTotal">0 ₽</strong>
+    </div>
+
+    <p class="cart-note" id="cartNote">
+      После нажатия откроется Telegram с подготовленной заявкой.
+      Для отправки сообщения потребуется подтвердить отправку в Telegram.
+    </p>
+
+    <button class="checkout" id="checkout" disabled>
+      Оформить заявку ↗
+    </button>
+
+  </div>
+</aside>
+
+<script>
+
+/* =====================================
+   COURSE DATABASE
+===================================== */
+
+const coursesData = [
+
+  {
+    number:1,
+    title:"OSINT: основы и разведывательный цикл",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"BEGINNER",
+    description:"Фундаментальная программа по OSINT: основы поиска, сбор информации, проверка данных, анализ и полный цикл разведки.",
+    price:2000,
+    usd:23,
+    image:"photo-1516321318423-f06f85e504b3"
+  },
+
+  {
+    number:2,
+    title:"OSINT: комплексный учебный маршрут",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"ADVANCED",
+    description:"Большая база знаний по разведке из открытых источников, инструментам, методикам и практическим направлениям.",
+    price:3000,
+    usd:35,
+    image:"photo-1451187580459-43490279c0fa"
+  },
+
+  {
+    number:3,
+    title:"Практическое руководство OSINT",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"ADVANCED",
+    description:"Практическое руководство по поиску, сбору, сопоставлению и анализу информации из открытых источников.",
+    price:4000,
+    usd:47,
+    image:"photo-1518770660439-4636190af475"
+  },
+
+  {
+    number:4,
+    title:"Операционное руководство OSINT",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"PRO",
+    description:"Практические материалы по организации OSINT-операций, инструментам, поисковым методам и направлениям цифровой разведки.",
+    price:7000,
+    usd:83,
+    image:"photo-1455390582262-044cdead277a"
+  },
+
+  {
+    number:5,
+    title:"OSINT Core Collection: базовый инструментарий",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"BEGINNER",
+    description:"Подборка базовых и практических материалов, необходимых для освоения основных направлений OSINT.",
+    price:1500,
+    usd:17,
+    image:"photo-1516321497487-e288fb19713f"
+  },
+
+  {
+    number:6,
+    title:"Системная практика OSINT",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"INTERMEDIATE",
+    description:"Практическая программа по системному применению инструментов и методик разведки из открытых источников.",
+    price:2500,
+    usd:29,
+    image:"photo-1531297484001-80022131f5a1"
+  },
+
+  {
+    number:7,
+    title:"Энциклопедия OSINT: полный справочник",
+    category:"advanced",
+    categoryName:"OSINT",
+    level:"EXPERT",
+    description:"Обширная образовательная база по направлениям, инструментам и методологии современной цифровой разведки.",
+    price:12000,
+    usd:141,
+    image:"photo-1519389950473-47ba0277781c"
+  },
+
+  {
+    number:8,
+    title:"Профессиональный трек OSINT",
+    category:"advanced",
+    categoryName:"OSINT",
+    level:"ADVANCED",
+    description:"Комплексная программа, последовательно раскрывающая OSINT от фундаментальных основ до продвинутого профессионального уровня.",
+    price:5000,
+    usd:59,
+    image:"photo-1498050108023-c5249f4df085"
+  },
+
+  {
+    number:9,
+    title:"Бизнес-аналитика и OSINT-аналитика",
+    category:"advanced",
+    categoryName:"BUSINESS INTELLIGENCE",
+    level:"ADVANCED",
+    description:"Изучение бизнес-разведки, анализа организаций, открытых корпоративных данных, связей и аналитических методов.",
+    price:4500,
+    usd:53,
+    image:"photo-1460925895917-afdab827c52f"
+  },
+
+  {
+    number:10,
+    title:"Киберразведка угроз (CTI): основы и практика",
+    category:"security",
+    categoryName:"CTI / CYBER",
+    level:"ADVANCED",
+    description:"Планирование, сбор, обработка и анализ разведывательной информации о киберугрозах и действиях злоумышленников.",
+    price:2500,
+    usd:29,
+    image:"photo-1550751827-4bd374c3f58b"
+  },
+
+  {
+    number:11,
+    title:"Социальная инженерия и OSINT: разведка человеческого фактора",
+    category:"security",
+    categoryName:"OSINT / SECURITY",
+    level:"INTERMEDIATE",
+    description:"Изучение социальной инженерии, методов поиска информации, цифровых следов и способов противодействия манипуляциям.",
+    price:2500,
+    usd:29,
+    image:"photo-1563013544-824ae1b704d3"
+  },
+
+  {
+    number:12,
+    title:"Прикладная разведка по открытым источникам",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"ADVANCED",
+    description:"Практическая программа по методам OSINT, сбору и проверке информации, анализу цифровых следов и построению выводов.",
+    price:5500,
+    usd:65,
+    image:"photo-1516321318423-f06f85e504b3"
+  },
+
+  {
+    number:13,
+    title:"Кибер-аналитика и цифровые расследования",
+    category:"security",
+    categoryName:"CYBERSECURITY",
+    level:"ADVANCED",
+    description:"Изучение кибер-аналитики, цифровых расследований, анализа инцидентов и методов исследования инфраструктуры.",
+    price:4500,
+    usd:53,
+    image:"photo-1550751827-4bd374c3f58b"
+  },
+
+  {
+    number:14,
+    title:"OSINT: сбор, анализ и цифровая разведка",
+    category:"osint",
+    categoryName:"OSINT",
+    level:"ADVANCED",
+    description:"Комплексная программа по поисковым техникам, анализу открытых данных, цифровым следам и аналитическим методам.",
+    price:3000,
+    usd:35,
+    image:"photo-1451187580459-43490279c0fa"
+  },
+
+  {
+    number:15,
+    title:"Профессиональная программа OSINT",
+    category:"advanced",
+    categoryName:"OSINT PRO",
+    level:"EXPERT",
+    description:"Последовательная программа развития компетенций: от фундаментальных принципов OSINT до продвинутых методов аналитики.",
+    price:6500,
+    usd:76,
+    image:"photo-1518770660439-4636190af475"
+  },
+
+  {
+    number:16,
+    title:"Advanced OSINT Academy",
+    category:"advanced",
+    categoryName:"PREMIUM ACADEMY",
+    level:"EXPERT",
+    description:"Продвинутая образовательная программа по современной цифровой разведке, аналитическим методикам и специализированным направлениям OSINT.",
+    price:7000,
+    usd:83,
+    image:"photo-1519389950473-47ba0277781c"
+  },
+
+  {
+    number:17,
+    title:"OSINT Academy",
+    category:"advanced",
+    categoryName:"ACADEMY",
+    level:"EXPERT",
+    description:"Комплексная академическая программа по разведке, аналитике, исследованию цифровой инфраструктуры и практическим методам OSINT.",
+    price:12000,
+    usd:145,
+    image:"photo-1519389950473-47ba0277781c"
+  }
+
+];
+
+
+/* =====================================
+   CATALOG
+===================================== */
+
+const imageUrl = id =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
+
+const grid = document.getElementById("courses");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+
+let activeFilter = "all";
+let selectedCourse = null;
+
+
+/* =====================================
+   CART STORAGE
+===================================== */
+
+let cart = [];
+
+try {
+  cart = JSON.parse(
+    localStorage.getItem("cli_intelligence_cart") || "[]"
+  );
+} catch(error) {
+  cart = [];
+}
+
+if (!Array.isArray(cart)) {
+  cart = [];
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem(
+      "cli_intelligence_cart",
+      JSON.stringify(cart)
+    );
+  } catch(error) {
+    console.warn("Не удалось сохранить корзину", error);
+  }
+}
+
+function isInCart(id) {
+  return cart.some(item => item.number === id);
+}
+
+function priceText(course) {
+  return course.price.toLocaleString("ru-RU") + " ₽";
+}
+
+
+/* =====================================
+   ADD / REMOVE COURSES
+===================================== */
+
+function addToCart(id) {
+
+  const course = coursesData.find(
+    item => item.number === id
+  );
+
+  if (!course || isInCart(id)) return;
+
+  cart.push({
+    number:course.number
+  });
+
+  saveCart();
+  renderCart();
+  renderCourses();
+}
+
+function removeFromCart(id) {
+
+  cart = cart.filter(
+    item => item.number !== id
+  );
+
+  saveCart();
+  renderCart();
+  renderCourses();
+}
+
+
+/* =====================================
+   RENDER CATALOG
+===================================== */
+
+function renderCourses() {
+
+  const query = search.value.toLowerCase().trim();
+
+  const filtered = coursesData.filter(course => {
+
+    const matchesFilter =
+      activeFilter === "all" ||
+      course.category === activeFilter ||
+      (
+        activeFilter === "advanced" &&
+        course.level === "EXPERT"
+      );
+
+    const matchesSearch =
+      `${course.title} ${course.description} ${course.categoryName}`
+      .toLowerCase()
+      .includes(query);
+
+    return matchesFilter && matchesSearch;
+  });
+
+  count.textContent =
+    `${filtered.length} / ${coursesData.length} PROGRAMS`;
+
+  if (!filtered.length) {
+    grid.innerHTML =
+      '<div class="empty">Ничего не найдено.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(course => `
+
+    <article class="course">
+
+      <div class="course-image">
+
+        <img
+          src="${imageUrl(course.image)}"
+          alt="${course.title}"
+          loading="lazy"
+        >
+
+        <span class="course-number">
+          № ${String(course.number).padStart(2,"0")}
+        </span>
+
+        <span class="course-level">
+          ${course.level}
+        </span>
+
+      </div>
+
+      <div class="course-body">
+
+        <div class="course-category">
+          ${course.categoryName}
+        </div>
+
+        <h3>${course.title}</h3>
+
+        <p class="course-description">
+          ${course.description}
+        </p>
+
+        <div class="course-bottom">
+
+          <div class="price">
+            ${priceText(course)}
+            <small>$${course.usd}</small>
+          </div>
+
+          <div class="course-actions">
+
+            <button
+              class="details"
+              data-id="${course.number}"
+            >
+              Подробнее ↗
+            </button>
+
+            <button
+              class="add-cart ${isInCart(course.number) ? "added" : ""}"
+              data-add="${course.number}"
+            >
+              ${isInCart(course.number) ? "Добавлено ✓" : "В корзину +"}
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `).join("");
+
+
+  grid.querySelectorAll(".details").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const course = coursesData.find(
+        item => item.number === Number(button.dataset.id)
+      );
+
+      showModal(course);
+
+    });
+
+  });
+
+
+  grid.querySelectorAll(".add-cart").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const id = Number(button.dataset.add);
+
+      if (isInCart(id)) {
+        removeFromCart(id);
+      } else {
+        addToCart(id);
+      }
+
+    });
+
+  });
+
+}
+
+
+/* =====================================
+   COURSE MODAL
+===================================== */
+
+function showModal(course) {
+
+  selectedCourse = course;
+
+  document.getElementById("modalNumber").textContent =
+    `COURSE / ${String(course.number).padStart(2,"0")}`;
+
+  document.getElementById("modalTitle").textContent =
+    course.title;
+
+  document.getElementById("modalDescription").textContent =
+    course.description;
+
+  document.getElementById("modalPrice").innerHTML =
+    `${priceText(course)} <span>$${course.usd}</span>`;
+
+  const button = document.getElementById("modalAdd");
+
+  button.textContent = isInCart(course.number)
+    ? "Убрать из корзины"
+    : "Добавить в корзину";
+
+  document.getElementById("modal").classList.add("open");
+
+  document.body.classList.add("no-scroll");
+}
+
+function closeModal() {
+
+  document.getElementById("modal").classList.remove("open");
+
+  document.body.classList.remove("no-scroll");
+}
+
+document.getElementById("closeModal").addEventListener(
+  "click",
+  closeModal
+);
+
+document.getElementById("modal").addEventListener(
+  "click",
+  event => {
+    if (event.target.id === "modal") {
+      closeModal();
+    }
+  }
+);
+
+document.getElementById("modalAdd").addEventListener(
+  "click",
+  () => {
+
+    if (!selectedCourse) return;
+
+    if (isInCart(selectedCourse.number)) {
+      removeFromCart(selectedCourse.number);
+    } else {
+      addToCart(selectedCourse.number);
+    }
+
+    document.getElementById("modalAdd").textContent =
+      isInCart(selectedCourse.number)
+        ? "Убрать из корзины"
+        : "Добавить в корзину";
+
+  }
+);
+
+
+/* =====================================
+   CART RENDER
+===================================== */
+
+function renderCart() {
+
+  const itemsBox = document.getElementById("cartItems");
+  const countBadge = document.getElementById("cartCount");
+  const totalElement = document.getElementById("cartTotal");
+  const checkout = document.getElementById("checkout");
+
+  const courses = cart
+    .map(item =>
+      coursesData.find(course => course.number === item.number)
+    )
+    .filter(Boolean);
+
+  countBadge.textContent = courses.length;
+
+  if (!courses.length) {
+
+    itemsBox.innerHTML = `
+      <div class="cart-empty">
+        Корзина пока пуста.<br>
+        Добавь интересующие тебя образовательные программы.
+      </div>
+    `;
+
+  } else {
+
+    itemsBox.innerHTML = courses.map(course => `
+
+      <div class="cart-item">
+
+        <div>
+
+          <h3>${course.title}</h3>
+
+          <p>
+            № ${String(course.number).padStart(2,"0")}
+            · ${priceText(course)}
+          </p>
+
+        </div>
+
+        <button
+          class="remove-item"
+          data-remove="${course.number}"
+        >
+          Удалить ×
+        </button>
+
+      </div>
+
+    `).join("");
+
+
+    itemsBox.querySelectorAll("[data-remove]").forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        removeFromCart(Number(button.dataset.remove));
+
+      });
+
+    });
+
+  }
+
+  const total = courses.reduce(
+    (sum, course) => sum + course.price,
+    0
+  );
+
+  totalElement.textContent =
+    total.toLocaleString("ru-RU") + " ₽";
+
+  checkout.disabled = courses.length === 0;
+
+}
+
+
+/* =====================================
+   OPEN / CLOSE CART
+===================================== */
+
+function openCart() {
+
+  document.getElementById("cartPanel").classList.add("open");
+
+  document.getElementById("cartOverlay").classList.add("open");
+
+  document.body.classList.add("no-scroll");
+
+}
+
+function closeCart() {
+
+  document.getElementById("cartPanel").classList.remove("open");
+
+  document.getElementById("cartOverlay").classList.remove("open");
+
+  document.body.classList.remove("no-scroll");
+
+}
+
+document.getElementById("openCart").addEventListener(
+  "click",
+  openCart
+);
+
+document.getElementById("closeCart").addEventListener(
+  "click",
+  closeCart
+);
+
+document.getElementById("cartOverlay").addEventListener(
+  "click",
+  closeCart
+);
+
+
+/* =====================================
+   CHECKOUT THROUGH TELEGRAM
+===================================== */
+
+document.getElementById("checkout").addEventListener(
+  "click",
+  () => {
+
+    const selected = cart
+      .map(item =>
+        coursesData.find(course => course.number === item.number)
+      )
+      .filter(Boolean);
+
+    if (!selected.length) return;
+
+    const total = selected.reduce(
+      (sum, course) => sum + course.price,
+      0
+    );
+
+    const lines = selected.map(course =>
+      `• Курс №${course.number}: ${course.title} — ${course.price.toLocaleString("ru-RU")} ₽ / $${course.usd}`
+    );
+
+    const message = [
+
+      "Здравствуйте! Хочу оформить покупку курсов CLI INTELLIGENCE.",
+
+      "",
+
+      ...lines,
+
+      "",
+
+      `Итого: ${total.toLocaleString("ru-RU")} ₽`,
+
+      "",
+
+      "Подскажите, пожалуйста, дальнейшие шаги."
+
+    ].join("\n");
+
+    const telegramUrl =
+      "https://t.me/cli_intelligence?text=" +
+      encodeURIComponent(message);
+
+    window.open(
+      telegramUrl,
+      "_blank",
+      "noopener"
+    );
+
+  }
+);
+
+
+/* =====================================
+   SEARCH
+===================================== */
+
+search.addEventListener(
+  "input",
+  renderCourses
+);
+
+
+/* =====================================
+   FILTERS
+===================================== */
+
+document.querySelectorAll(".filter").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    document.querySelectorAll(".filter").forEach(item => {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    activeFilter = button.dataset.filter;
+
+    renderCourses();
+
+  });
+
+});
+
+
+/* =====================================
+   SCROLL ANIMATIONS
+===================================== */
+
+const observer = new IntersectionObserver(
+  entries => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+
+        entry.target.classList.add("visible");
+
+        observer.unobserve(entry.target);
+
+      }
+
+    });
+
+  },
+  {
+    threshold:.12
+  }
+);
+
+document.querySelectorAll(".reveal").forEach(element => {
+  observer.observe(element);
+});
+
+
+/* =====================================
+   KEYBOARD CONTROLS
+===================================== */
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+    closeModal();
+    closeCart();
+  }
+
+});
+
+
+/* =====================================
+   INITIALIZATION
+===================================== */
+
+renderCourses();
+renderCart();
+
+</script>
+
+</body>
+</html>
